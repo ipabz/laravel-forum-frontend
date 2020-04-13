@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=7.2.0",
-        "riari/laravel-forum": "~4.2"
+        "riari/laravel-forum": "dev-laravel-6"
     },
     "autoload": {
         "psr-4": {
@@ -24,5 +24,11 @@
                 "Riari\\Forum\\Frontend\\ForumFrontendServiceProvider"
             ]
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ipabz/laravel-forum"
+        }
+    ]
 }
