@@ -4,6 +4,7 @@ use Illuminate\Routing\Router;
 use Riari\Forum\Models\Category;
 use Riari\Forum\Models\Post;
 use Riari\Forum\Models\Thread;
+use Illuminate\Support\Str;
 use Session;
 
 class Forum
@@ -50,7 +51,7 @@ class Forum
      */
     public static function route($route, $model = null)
     {
-        if (!Illuminate\Support\Str::startsWith($route, config('forum.routing.as'))) {
+        if (!Str::startsWith($route, config('forum.routing.as'))) {
             $route = config('forum.routing.as') . $route;
         }
 
@@ -154,6 +155,6 @@ class Forum
      */
     public static function slugify($string)
     {
-        return Illuminate\Support\Str::slug($string, '-');
+        return Str::slug($string, '-');
     }
 }
