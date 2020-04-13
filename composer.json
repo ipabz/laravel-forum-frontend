@@ -17,5 +17,12 @@
         "psr-4": {
             "Riari\\Forum\\Frontend\\": "src"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Riari\\Forum\\Frontend\\ForumFrontendServiceProvider"
+            ]
+        }
     }
 }
