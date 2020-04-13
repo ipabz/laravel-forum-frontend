@@ -154,6 +154,6 @@ class Forum
      */
     public static function slugify($string)
     {
-        return str_slug($string, '-');
+        return Illuminate\Support\Str::slug($string, '-');
     }
 }

@@ -11,7 +11,7 @@
                 </strong>
             </p>
             <blockquote>
-                {!! str_limit(Forum::render($post->parent->content)) !!}
+                {!! Illuminate\Support\Str::limit(Forum::render($post->parent->content), 100) !!}
             </blockquote>
         @endif
 
