@@ -50,7 +50,7 @@ class Forum
      */
     public static function route($route, $model = null)
     {
-        if (!starts_with($route, config('forum.routing.as'))) {
+        if (!Illuminate\Support\Str::startsWith($route, config('forum.routing.as'))) {
             $route = config('forum.routing.as') . $route;
         }
 
