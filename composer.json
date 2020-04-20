@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=7.2.0",
-        "riari/laravel-forum": "dev-laravel-6"
+        "riari/laravel-forum": "dev-naesa"
     },
     "autoload": {
         "psr-4": {
