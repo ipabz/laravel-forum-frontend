@@ -48,7 +48,7 @@ abstract class BaseController extends Controller implements ReceiverContract
      * @param  Response  $response
      * @return Response|mixed
      */
-    public function handleResponse(Request $request, Response $response)
+    public function handleResponse(Request $request, $response)
     {
         if ($response->getStatusCode() == 422) {
             $errors = $response->getOriginalContent()['validation_errors'];
@@ -72,9 +72,9 @@ abstract class BaseController extends Controller implements ReceiverContract
      * @param  string  $transKey
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function bulkActionResponse(Collection $models, $transKey)
+    protected function bulkActionResponse($models, $transKey)
     {
-        if ($models->count()) {
+        if ($models && $models->count()) {
             Forum::alert('success', $transKey, $models->count());
         } else {
             Forum::alert('warning', 'general.invalid_selection');
