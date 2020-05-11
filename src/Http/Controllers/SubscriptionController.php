@@ -12,13 +12,8 @@ class SubscriptionController extends BaseController
      */
     public function subscribe(Request $request)
     {
-        $type = Category::class;
-        $id = $request->input('category');
-
-        if ($request->exists('category')) {
-            $type = Category::class;
-            $id = $request->input('category');
-        }
+        $type = $request->input('subscribable_type');
+        $id = $request->input('subscribable_id');
 
         $subscription = $this->api('subscription.subscribe')->parameters([
             'subscribable_id' => $id,
@@ -37,13 +32,8 @@ class SubscriptionController extends BaseController
      */
     public function unsubscribe(Request $request)
     {
-        $type = Category::class;
-        $id = $request->input('category');
-
-        if ($request->exists('category')) {
-            $type = Category::class;
-            $id = $request->input('category');
-        }
+        $type = $request->input('subscribable_type');
+        $id = $request->input('subscribable_id');
 
         $subscription = $this->api('subscription.unsubscribe')->parameters([
             'subscribable_id' => $id,
