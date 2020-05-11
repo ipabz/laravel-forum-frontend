@@ -32,6 +32,23 @@ class Forum
     }
 
     /**
+     * @param $model
+     * @return bool
+     */
+    public static function isSubscribed($model)
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return false;
+        }
+
+        $subscription = $model->subscription->where('user_id', $user->id)->first();
+
+        return $subscription ? true : false;
+    }
+
+    /**
      * Render the given content.
      *
      * @param  string  $content
@@ -114,6 +131,10 @@ class Forum
         // New/updated threads
         $router->get('new', ['as' => 'index-new', 'uses' => "{$controllers['thread']}@indexNew"]);
         $router->patch('new', ['as' => 'mark-new', 'uses' => "{$controllers['thread']}@markNew"]);
+
+        // Subscriptions
+        $router->get('subscribe', ['as' => 'subscriptions.subscribe', 'uses' => 'SubscriptionController@subscribe']);
+        $router->get('unsubscribe', ['as' => 'subscriptions.unsubscribe', 'uses' => 'SubscriptionController@unsubscribe']);
 
         // Categories
         $router->post('category/create', ['as' => 'category.store', 'uses' => "{$controllers['category']}@store"]);
