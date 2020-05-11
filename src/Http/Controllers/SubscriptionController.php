@@ -12,8 +12,8 @@ class SubscriptionController extends BaseController
      */
     public function subscribe(Request $request)
     {
-        $type = $request->input('subscribable_type');
-        $id = $request->input('subscribable_id');
+        $type = $request->has('thread') ? 'Riari\Forum\Models\Thread' : 'Riari\Forum\Models\Category';
+        $id = $request->exists('thread') ? $request->input('thread') : $request->input('category');
 
         $subscription = $this->api('subscription.subscribe')->parameters([
             'subscribable_id' => $id,
@@ -32,8 +32,8 @@ class SubscriptionController extends BaseController
      */
     public function unsubscribe(Request $request)
     {
-        $type = $request->input('subscribable_type');
-        $id = $request->input('subscribable_id');
+        $type = $request->has('thread') ? 'Riari\Forum\Models\Thread' : 'Riari\Forum\Models\Category';
+        $id = $request->exists('thread') ? $request->input('thread') : $request->input('category');
 
         $subscription = $this->api('subscription.unsubscribe')->parameters([
             'subscribable_id' => $id,

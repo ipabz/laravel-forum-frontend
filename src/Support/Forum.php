@@ -110,9 +110,6 @@ class Forum
                     }
                     break;
             }
-
-            $params['subscribable_type'] = get_class($model);
-            $params['subscribable_id'] = $model->id;
         }
 
         return route($route, $params) . $append;
