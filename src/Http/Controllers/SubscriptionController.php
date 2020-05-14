@@ -46,35 +46,4 @@ class SubscriptionController extends BaseController
         return redirect()->back();
     }
 
-    /**
-     * POST: Create a post.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
-    {
-        $thread = $this->api('thread.fetch', $request->route('thread'))->parameters(['with' => ['posts']])->get();
-
-        $this->authorize('reply', $thread);
-
-        $post = null;
-        if ($request->has('post')) {
-            $post = $thread->posts->find($request->input('post'));
-        }
-
-        $post = $this->api('post.store')->parameters([
-            'thread_id' => $thread->id,
-            'author_id' => auth()->user()->getKey(),
-            'post_id'   => is_null($post) ? 0 : $post->id,
-            'content'   => $request->input('content')
-        ])->post();
-
-        $post->thread->touch();
-
-        Forum::alert('success', 'general.reply_added');
-
-        return redirect(Forum::route('thread.show', $post));
-    }
-
 }
