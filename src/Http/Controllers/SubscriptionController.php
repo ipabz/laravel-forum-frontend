@@ -46,4 +46,21 @@ class SubscriptionController extends BaseController
         return redirect()->back();
     }
 
+    public function unsubscribe_from_email($subsIdEncrypted)
+    {
+        $response = $this->api('subscription.unsubscribe_email')->parameters([
+            'subscription_id_encrypted' => $subsIdEncrypted
+        ])->post();
+
+        if ($response['success']) {
+            $url = Forum::route('thread.show', $response['subscribable']);
+
+            Forum::alert('success', 'subscriptions.success_unsubscribed');
+        } else {
+            $url = url('forum');
+        }
+
+        return redirect($url);
+    }
+
 }

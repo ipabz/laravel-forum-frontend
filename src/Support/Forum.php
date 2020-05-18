@@ -135,6 +135,7 @@ class Forum
         // Subscriptions
         $router->get('subscribe', ['as' => 'subscriptions.subscribe', 'uses' => 'SubscriptionController@subscribe']);
         $router->get('unsubscribe', ['as' => 'subscriptions.unsubscribe', 'uses' => 'SubscriptionController@unsubscribe']);
+        $router->get('unsubscribe/{subsIdEncrypted}', ['as' => 'subscriptions.unsubscribe_email', 'uses' => 'SubscriptionController@unsubscribe_from_email']);
 
         // Categories
         $router->post('category/create', ['as' => 'category.store', 'uses' => "{$controllers['category']}@store"]);
