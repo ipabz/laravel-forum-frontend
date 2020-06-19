@@ -21,7 +21,12 @@ class CategoryController extends BaseController
                                'where' => ['category_id' => 0],
                                'orderBy' => 'weight',
                                'orderDir' => 'asc',
-                               'with' => ['categories', 'threads'],
+                               'with' => [
+                                   'categories' => function($query) use ($request) {
+                                        $query->search($request->input('q'));
+                                   },
+                                   'threads'
+                               ],
                                'search_keyword' => $request->input('q')
                            ])
                            ->get();
