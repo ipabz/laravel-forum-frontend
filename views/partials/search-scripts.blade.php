@@ -77,6 +77,7 @@
             var timeout = 200;
 
             if (!keyword) {
+                url = "{{ \Illuminate\Support\Facades\URL::current() }}";
                 timeout = 10;
             }
 
