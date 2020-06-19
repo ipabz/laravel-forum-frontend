@@ -18,21 +18,26 @@ class CategoryController extends BaseController
     {
         $keyword = $request->input('q');
 
+        $params = [
+            'orderBy' => 'weight',
+            'orderDir' => 'asc',
+            'with' => [
+                'categories' => function($query) use ($keyword) {
+                    if ($keyword) {
+                        $query->search($keyword);
+                    }
+                },
+                'threads'
+            ],
+            'search_keyword' => $keyword
+        ];
+
+        if (!$keyword) {
+            $params['where'] = ['category_id' => 0];
+        }
+
         $categories = $this->api('category.index')
-                           ->parameters([
-                               'where' => ['category_id' => 0],
-                               'orderBy' => 'weight',
-                               'orderDir' => 'asc',
-                               'with' => [
-                                   'categories' => function($query) use ($keyword) {
-                                        if ($keyword) {
-                                            $query->search($keyword);
-                                        }
-                                   },
-                                   'threads'
-                               ],
-                               'search_keyword' => $keyword
-                           ])
+                           ->parameters($params)
                            ->get();
 
         event(new UserViewingIndex);
