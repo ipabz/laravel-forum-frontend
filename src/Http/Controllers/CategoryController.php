@@ -16,18 +16,22 @@ class CategoryController extends BaseController
      */
     public function index(Request $request)
     {
+        $keyword = $request->input('q');
+
         $categories = $this->api('category.index')
                            ->parameters([
                                'where' => ['category_id' => 0],
                                'orderBy' => 'weight',
                                'orderDir' => 'asc',
                                'with' => [
-                                   'categories' => function($query) use ($request) {
-                                        $query->search($request->input('q'));
+                                   'categories' => function($query) use ($keyword) {
+                                        if ($keyword) {
+                                            $query->search($keyword);
+                                        }
                                    },
                                    'threads'
                                ],
-                               'search_keyword' => $request->input('q')
+                               'search_keyword' => $keyword
                            ])
                            ->get();
 
