@@ -65,6 +65,8 @@
             url = "{{ \Illuminate\Support\Facades\URL::current() }}?t=" + (new Date().getTime());
         }
 
+        history.pushState({id: 'Search-' + url}, 'Search - ' + url, url);
+
         $('.search-iframe').attr('src', url);
     };
 
