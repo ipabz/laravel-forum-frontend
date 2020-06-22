@@ -56,7 +56,7 @@
 
     function search()
     {
-        $('.search-content').html('<div class="pt-5 text-center"><span class="fa fa-circle-notch fa-spin fa-7x"> </span></div>');
+        $('.search-content').html('<div class="pt-5 text-center"><span class="fa fa-circle-notch fa-spin fa-5x"> </span></div>');
 
         var keyword = $('.search-form .search-field').val();
         var url = "{{ Forum::route('search') }}?q=" + keyword + '&t=' + (new Date().getTime());
