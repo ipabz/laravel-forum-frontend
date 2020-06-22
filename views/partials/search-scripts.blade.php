@@ -57,6 +57,27 @@
         }, 100);
     });
 
+    function search()
+    {
+        $('.search-content').html('<div class="pt-5 text-center"><span class="fa fa-circle-notch fa-spin fa-7x"> </span></div>');
+
+        var keyword = $('.search-form .search-field').val();
+        var url = "{{ Forum::route('index') }}?q=" + keyword;
+
+        var timeout = 200;
+
+        if (!keyword) {
+            url = "{{ \Illuminate\Support\Facades\URL::current() }}";
+            timeout = 10;
+        }
+
+        searchTimeout = setTimeout(function () {
+            $('.search-iframe').attr('src', url);
+
+            searchTimeout = null;
+        }, timeout);
+    };
+
     $(function () {
         $('.search-form .search-field').keypress(function (e) {
             searchFieldDirty = true;
@@ -68,23 +89,7 @@
             if (e.keyCode == 13) {
                 e.preventDefault();
 
-                $('.search-content').html('<div class="pt-5 text-center"><span class="fa fa-circle-notch fa-spin fa-7x"> </span></div>');
-
-                var keyword = $('.search-form .search-field').val();
-                var url = "{{ Forum::route('index') }}?q=" + keyword;
-
-                var timeout = 200;
-
-                if (!keyword) {
-                    url = "{{ \Illuminate\Support\Facades\URL::current() }}";
-                    timeout = 10;
-                }
-
-                searchTimeout = setTimeout(function () {
-                    $('.search-iframe').attr('src', url);
-
-                    searchTimeout = null;
-                }, timeout);
+                search();
             }
         });
     });
