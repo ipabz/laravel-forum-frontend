@@ -58,34 +58,34 @@
     });
 
     $(function () {
-        $('.search-form .search-field').keyup(function (e) {
+        $('.search-form .search-field').keypress(function (e) {
             searchFieldDirty = true;
 
             if (searchTimeout) {
                 clearTimeout(searchTimeout);
             }
 
-            if (e.keyCode === 13) {
+            if (e.keyCode == 13) {
                 e.preventDefault();
+
+                $('.search-content').html('<div class="pt-5 text-center"><span class="fa fa-circle-notch fa-spin fa-7x"> </span></div>');
+
+                var keyword = $('.search-form .search-field').val();
+                var url = "{{ Forum::route('index') }}?q=" + keyword;
+
+                var timeout = 200;
+
+                if (!keyword) {
+                    url = "{{ \Illuminate\Support\Facades\URL::current() }}";
+                    timeout = 10;
+                }
+
+                searchTimeout = setTimeout(function () {
+                    $('.search-iframe').attr('src', url);
+
+                    searchTimeout = null;
+                }, timeout);
             }
-
-            $('.search-content').html('<div class="pt-5 text-center"><span class="fa fa-circle-notch fa-spin fa-7x"> </span></div>');
-
-            var keyword = $('.search-form .search-field').val();
-            var url = "{{ Forum::route('index') }}?q=" + keyword;
-
-            var timeout = 200;
-
-            if (!keyword) {
-                url = "{{ \Illuminate\Support\Facades\URL::current() }}";
-                timeout = 10;
-            }
-
-            searchTimeout = setTimeout(function () {
-                $('.search-iframe').attr('src', url);
-
-                searchTimeout = null;
-            }, timeout);
         });
     });
 </script>

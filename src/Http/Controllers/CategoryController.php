@@ -46,6 +46,43 @@ class CategoryController extends BaseController
     }
 
     /**
+     * GET: Search
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $keyword = $request->input('q');
+
+        $params = [
+            'orderBy' => 'weight',
+            'orderDir' => 'asc',
+            'with' => [
+                'categories' => function($query) use ($keyword) {
+                    if ($keyword) {
+                        $query->search($keyword);
+                    }
+                },
+                'threads'
+            ],
+            'search_keyword' => $keyword
+        ];
+
+        if (!$keyword) {
+            $params['where'] = ['category_id' => 0];
+        }
+
+        $categories = $this->api('category.index')
+            ->parameters($params)
+            ->get();
+
+        event(new UserViewingIndex);
+
+        return view('forum::search.index', compact('categories'));
+    }
+
+    /**
      * GET: Return a category view.
      *
      * @param  Request  $request

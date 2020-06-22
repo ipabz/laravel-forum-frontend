@@ -128,6 +128,9 @@ class Forum
         // Forum index
         $router->get('/', ['as' => 'index', 'uses' => "{$controllers['category']}@index"]);
 
+        // Forum Search
+        $router->get('/search', ['as' => 'search', 'uses' => "{$controllers['category']}@search"]);
+
         // New/updated threads
         $router->get('new', ['as' => 'index-new', 'uses' => "{$controllers['thread']}@indexNew"]);
         $router->patch('new', ['as' => 'mark-new', 'uses' => "{$controllers['thread']}@markNew"]);

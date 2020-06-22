@@ -1,7 +1,12 @@
-<form class="search-form" action="{{ Forum::route('index') }}" method="GET">
+<form class="search-form" action="{{ Forum::route('search') }}" method="GET">
     <div class="row mb-3">
         <div class="col-sm-12">
-            <input type="text" class="form-control search-field" placeholder="Search..." name="q" value="{{ request('q') }}">
+            <div class="input-group">
+                <input type="text" class="form-control search-field" placeholder="Search..." name="q" value="{{ request('q') }}">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">Search</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
