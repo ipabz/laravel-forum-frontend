@@ -2,8 +2,7 @@
     <iframe class="search-iframe"></iframe>
 </div>
 <script>
-    var searchTimeout = null;
-    var searchFieldDirty = false;
+    var searchDirty = false;
 
     function iframeURLChange(iframe, callback) {
         var lastDispatched = null;
@@ -45,14 +44,12 @@
             var innerDoc = document.querySelector('.search-iframe').contentWindow.document;
             var content = innerDoc.querySelector('.search-content');
 
-            if (!searchTimeout) {
-                var contentObject = $(content);
+            var contentObject = $(content);
 
-                if (!contentObject.html() && searchFieldDirty) {
-                    $('.search-content').html('<div class="alert alert-info mt-3">No results found.</div>');
-                } else {
-                    $('.search-content').html(contentObject.html());
-                }
+            if (!contentObject.html() && searchDirty) {
+                $('.search-content').html('<div class="alert alert-info mt-3">No results found.</div>');
+            } else {
+                $('.search-content').html(contentObject.html());
             }
         }, 100);
     });
@@ -62,32 +59,27 @@
         $('.search-content').html('<div class="pt-5 text-center"><span class="fa fa-circle-notch fa-spin fa-7x"> </span></div>');
 
         var keyword = $('.search-form .search-field').val();
-        var url = "{{ Forum::route('index') }}?q=" + keyword;
-
-        var timeout = 200;
+        var url = "{{ Forum::route('search') }}?q=" + keyword;
 
         if (!keyword) {
             url = "{{ \Illuminate\Support\Facades\URL::current() }}";
-            timeout = 10;
         }
 
-        searchTimeout = setTimeout(function () {
-            $('.search-iframe').attr('src', url);
-
-            searchTimeout = null;
-        }, timeout);
+        $('.search-iframe').attr('src', url);
     };
 
     $(function () {
+        $('.search-form .search-button').click(function(e) {
+            e.preventDefault();
+
+            searchDirty = true;
+            search();
+        });
+
         $('.search-form .search-field').keypress(function (e) {
-            searchFieldDirty = true;
-
-            if (searchTimeout) {
-                clearTimeout(searchTimeout);
-            }
-
             if (e.keyCode == 13) {
                 e.preventDefault();
+                searchDirty = true;
 
                 search();
             }
