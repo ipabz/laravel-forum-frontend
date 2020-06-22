@@ -73,7 +73,7 @@ class CategoryController extends BaseController
             $params['where'] = ['category_id' => 0];
         }
 
-        $categories = $this->api('category.index')
+        $categories = $this->api('search.index')
             ->parameters($params)
             ->get();
 
