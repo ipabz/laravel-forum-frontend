@@ -68,7 +68,7 @@ class CategoryController extends BaseController
                     if ($keyword) {
                         $query->search($keyword);
                     }
-                }
+                },
             ],
             'search_keyword' => $keyword
         ];
