@@ -8,17 +8,31 @@
         <td>{{ $category->post_count }}</td>
         <td>
             @if ($category->newestThread)
-                <a href="{{ Forum::route('thread.show', $category->threads->first()) }}">
-                    {{ $category->threads->first()->title }}
-                    ({{ $category->threads->first()->authorName }})
+                <?php
+                $theThread = $category->threads()->search(request('q'))->latest()->first();
+
+                if (!$theThread) {
+                    $theThread = $category->newestThread;
+                }
+                ?>
+                <a href="{{ Forum::route('thread.show', $theThread) }}">
+                    {{ $theThread->title }}
+                    ({{ $theThread->authorName }})
                 </a>
             @endif
         </td>
         <td>
             @if ($category->latestActiveThread)
-                <a href="{{ Forum::route('thread.show', $category->threads->first()->lastPost) }}">
-                    {{ $category->threads->first()->title }}
-                    ({{ $category->threads->first()->lastPost->authorName }})
+                <?php
+                $theThread = $category->threads()->search(request('q'))->latest()->first();
+
+                if (!$theThread) {
+                    $theThread = $category->latestActiveThread;
+                }
+                ?>
+                <a href="{{ Forum::route('thread.show', $theThread->lastPost) }}">
+                    {{ $theThread->title }}
+                    ({{ $theThread->lastPost->authorName }})
                 </a>
             @endif
         </td>
