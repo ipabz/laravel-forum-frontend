@@ -33,14 +33,14 @@ $data['current_user'] = auth()->user();
                     </thead>
                     <tbody>
                     <tr class="category">
-                        @include ('forum::category.partials.list', ['titleClass' => 'lead'])
+                        @include ('forum::search.partials.list', ['titleClass' => 'lead'])
                     </tr>
                     @if (!$category->children->isEmpty())
                         <tr>
                             <th colspan="5">{{ trans('forum::categories.subcategories') }}</th>
                         </tr>
                         @foreach ($category->children as $subcategory)
-                            @include ('forum::category.partials.list', ['category' => $subcategory])
+                            @include ('forum::search.partials.list', ['category' => $subcategory])
                         @endforeach
                     @endif
                     </tbody>

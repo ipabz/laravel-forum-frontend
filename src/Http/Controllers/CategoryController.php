@@ -64,7 +64,11 @@ class CategoryController extends BaseController
                         $query->search($keyword);
                     }
                 },
-                'threads'
+                'threads' => function($query) use ($keyword) {
+                    if ($keyword) {
+                        $query->search($keyword);
+                    }
+                }
             ],
             'search_keyword' => $keyword
         ];
