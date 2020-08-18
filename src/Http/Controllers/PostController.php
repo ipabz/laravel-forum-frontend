@@ -69,7 +69,8 @@ class PostController extends BaseController
             'thread_id' => $thread->id,
             'author_id' => auth()->user()->getKey(),
             'post_id'   => is_null($post) ? 0 : $post->id,
-            'content'   => $request->input('content')
+            'content'   => $request->input('content'),
+            'anonymous' => $request->input('anonymous', 0)
         ])->post();
 
         $post->thread->touch();

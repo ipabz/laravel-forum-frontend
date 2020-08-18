@@ -127,7 +127,8 @@ class ThreadController extends BaseController
             'author_id'     => auth()->user()->getKey(),
             'category_id'   => $category->id,
             'title'         => $request->input('title'),
-            'content'       => $request->input('content')
+            'content'       => $request->input('content'),
+            'anonymous'     => $request->input('anonymous', 0)
         ];
 
         $thread = $this->api('thread.store')->parameters($thread)->post();
